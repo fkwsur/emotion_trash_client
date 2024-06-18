@@ -1,38 +1,273 @@
-.App {
-  text-align: center;
+body{
+  background-color: #F8F2EB;
+  letter-spacing: 0.5;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App{
+  display: flex; 
+  height: 100vh;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+/* 헤더 */
+.header{
+  position: fixed;
+  background-color: #fff9cb;
+  z-index: 1;
+  width: 12%; 
+  height: 100vh;
+  box-shadow: 0 4px 4px 3px rgba(102, 102, 102, 0.2);
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
   flex-direction: column;
+  /* border-radius: 0 10px 10px 0; */
+}
+.header .logo{
+  width: 30%;
+  height: 30%;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.header .logo img{
+ width: 100%;
+}
+.header .nav{
+  width: 100%;
+  height: 50%;
+  font-weight: 400; 
+  font-size: 2.2rem;
+  margin: 0 0 70% 0;
+}
+.header .nav ul{
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+}
+.header .nav ul li{
+  height: 70px;
+  line-height: 70px;
+}
+.header .nav ul li button{
+  width: 100%;
+  height: 100%;
+  font-size: 2.2rem;
+}
+.header .nav ul li:hover{
+  cursor: pointer;
+  background-color: #fff5ab;
+}
+.header .nav ul li button svg{margin-right: 10px;}
+.profile{
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+.profile img{
+  width: 40%;
 }
 
-.App-link {
-  color: #61dafb;
+/* 메인 */
+.dashboard{
+  width: 100%;
+  max-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+}
+.dashboard .main{
+  height: 95vh;
+  margin-left: 12%;
+  padding : 3% 3% 3% 3%;
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+
+}
+.dashboard .main.love{  background-color: #f9bfbf;}
+.dashboard .main.tarot{  background-color: #c9bff9;}
+.dashboard .main h2{
+  margin-top: 1%;
+  font-size: 2rem;
+  font-weight: 400;
+}
+/* 상담 본문 */
+.dashboard .main .chat_container{
+  display: flex;
+  justify-content: space-between;
+  max-height: 100%;
+  min-height: 10%;
+}
+/* 채팅 */
+.dashboard .chatting{
+  width: 77%;
+  background-color: #FDF6F6;
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2);
+}
+.dashboard .tarot .chatting{  background-color: #f8f6fd;}
+.dashboard .chatting .talk_wrap{
+  width: 100%;
+  margin-top: 35px;
+  padding: 0 35px 0px 55px;
+  height: 85%;
+  overflow-y: scroll;
+  display:flex;
+  justify-content: space-between;
+  flex-direction: column-reverse;
+}
+/* 스크롤바 */
+.dashboard .chatting .talk_wrap::-webkit-scrollbar {
+  width: 20px;
+}
+.dashboard .chatting .talk_wrap::-webkit-scrollbar-track{
+  background-color: #FDF6F6;
+}
+.dashboard .chatting .talk_wrap::-webkit-scrollbar-thumb{
+  width: 5px;
+  background-color: #F3EEE8;
+  border: 5px solid #FDF6F6;
+  border-radius: 10px;
+}
+.dashboard .chatting .talk{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+  padding-right: 30%;
+}
+.dashboard .chatting .talk.user{
+  flex-direction: row-reverse;
+  padding-right: 0;
+  padding-left: 30%;
+}
+.dashboard .chatting .talk p{
+  padding: 15px 20px;
+  margin: 0 20px;
+  font-size: 1.6rem;
+  background-color: #fff;
+  border-radius: 25px;
+}
+.dashboard .chatting form{
+  display: flex;
+  align-items: center;
+  height: 10%;
+  padding: 0 55px;
+  z-index: 210;
+}
+.dashboard .chatting form input{
+  border: 1px solid #fff;
+  width: 92%; height: 60%;
+  background: #fff;
+  padding-left: 20px;
+  border-radius: 15px 0 0 15px;
+  font-size: 1.6rem;
+}
+.dashboard .chatting form input::placeholder {
+  font-size: 1.6rem;
+  letter-spacing: 0.3px;
+  color: #959595;
+}
+.dashboard .chatting form button{
+  width: 8%; height: 60%;
+  background-color: inherit;
+  color: #fff;
+  border: 1px solid #FF9696;
+  border-radius: 0 15px 15px 0;
+  background-color: #FF9696;
+  font-size: 1.8rem;
+}
+.dashboard .tarot .chatting form button{
+  border: 1px solid #7774ff;
+  background-color: #7774ff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 상담기록 카드 */
+.dashboard .chatcard{
+  width: 20%;
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+  background-color: #FDF6F6;
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2);
+}
+.dashboard .tarot .chatcard{  background-color: #f8f6fd;}
+.dashboard .chatcard button{
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding: 30px 30px 0 30px;
+}
+.dashboard .chatcard button h3{
+  margin-right: 10px;
+}
+.dashboard .chatcard button img{
+  width: 17px;
+}
+.dashboard .chatcard .card_container{
+  overflow-y: scroll;
+  padding: 0 10px 0 30px;
+  margin-bottom: 30px;
+}
+/* 스크롤바 */
+.dashboard .chatcard .card_container::-webkit-scrollbar {
+  width: 20px;
+}
+.dashboard .chatcard .card_container::-webkit-scrollbar-track{
+  background-color: #FDF6F6;
+}
+.dashboard .chatcard .card_container::-webkit-scrollbar-thumb{
+  width: 5px;
+  background-color: #F3EEE8;
+  border: 5px solid #FDF6F6;
+  border-radius: 10px;
+}
+.dashboard .chatcard .card_container .card{
+  border-radius: 15px;
+  padding: 20px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2)
+}
+.dashboard .chatcard .card_container .card .title{
+  display: flex;
+  justify-content: space-between;
+}
+.dashboard .chatcard .card_container .card .title h3{
+  font-weight: 500;
+}
+.dashboard .chatcard .card_container .card .title h4{
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+.dashboard .chatcard .card_container .card p{
+  margin-top: 15px;
+  padding: 10px 15px;
+  border-radius: 15px;
+}
+.dashboard .chatcard .card.love{
+  background-color: #FFDAE3;
+}
+.dashboard .chatcard .card.love p{
+  background-color: #FFECEC;
+}
+.dashboard .chatcard .card.tarot{
+  background-color: #EEE0FF;
+}
+.dashboard .chatcard .card.tarot p{
+  background-color: #F6EEFF;
+}
+
+
+/* 푸터 */
+.dashboard .footer{
+  margin-left: 12%;
+  background-color: #eeeae67a;
+  height: 5vh;
+  text-align: center;
+  line-height: 50px;
+  font-size: 1.2rem;
 }
