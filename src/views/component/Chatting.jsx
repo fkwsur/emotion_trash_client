@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import counselor from "../../image/counselor.png";
+import socketio from "socket.io-client";
+const socket = socketio.connect("http://localhost:8081/");
 
 export const Chatting = (props) => {
         const [chatList, setChatList] = useState("");
@@ -31,12 +33,13 @@ export const Chatting = (props) => {
               setChatList(sample_chat)
         },[])
       
-        const onSubmit = (e) => {
+        const onSubmit = async(e) => {
           e.preventDefault();
           setChatList([{
               user: "user",
               chat: chat,
             },...chatList])
+            await socket.emit('chat', chat);
                 let mySpace = document.getElementById("scroll");
             mySpace.scrollTop = mySpace.scrollHeight;
             setChat("")
