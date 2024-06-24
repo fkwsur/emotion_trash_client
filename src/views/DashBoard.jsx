@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Love } from "../views/page/Love";
 import { Tarot } from "../views/page/Tarot";
+import { Auth } from "../views/page/Auth";
 import counselor from "../image/counselor.png";
 
 export const DashBoard = (props) => {
@@ -10,11 +11,13 @@ export const DashBoard = (props) => {
           <Love />
         ) : props.menu == "tarot" ? (
           <Tarot />
-        ) : (
+        ) : props.menu == "auth" ? (
+          <Auth />
+        ): (
           ""
         )}
       <div className="footer">
-        (주)세모이 &nbsp;&nbsp;|&nbsp;&nbsp; CEO &nbsp;&nbsp;김현지
+        (주) 세모이 &nbsp;&nbsp;|&nbsp;&nbsp; CEO &nbsp;&nbsp;김현지
         &nbsp;&nbsp;|&nbsp;&nbsp; Phone &nbsp;&nbsp;010-5790-6726
       </div>
     </div>

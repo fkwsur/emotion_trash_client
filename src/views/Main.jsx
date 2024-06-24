@@ -16,6 +16,11 @@ export const Main = () => {
         </div>
         <div className="nav">
           <ul>
+            {/* <li>
+              <button onClick={() => setMenu("")}>
+                <FontAwesomeIcon icon={faHeart} />감쓰통 소개
+              </button>
+            </li> */}
             <li>
               <button onClick={() => setMenu("love")}>
                 <FontAwesomeIcon icon={faHeart} /> 연애
@@ -34,8 +39,11 @@ export const Main = () => {
           </ul>
         </div>
         <div className="profile">
-          <img src={profile} alt="" /> <p>김현지님</p>
+          <button onClick={() => setMenu("auth")}>로그인</button>
         </div>
+        {/* <div className="profile">
+          <img src={profile} alt="" /> <p>김현지님</p>
+        </div> */}
       </div>
       <DashBoard menu={menu}/>
     </>

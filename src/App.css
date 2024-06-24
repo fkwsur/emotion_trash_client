@@ -94,6 +94,83 @@ body{
   font-size: 2rem;
   font-weight: 400;
 }
+/* 로그인 */
+.main.login{
+  display: grid;
+  place-content: center;
+  grid-template-rows : 1fr;
+  align-items: center;
+  background-color: #fffce7;
+}
+.main.login .login_box {
+  box-shadow: 0 4px 4px 3px rgba(102, 102, 102, 0.2);
+  background-color:#fdfaf6;
+  width: 700px;
+  border-radius: 25px;
+  padding: 60px 100px;
+  text-align: center;
+  margin-left: 0 auto;
+}
+.main.login .login_box img {
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+.main.login .login_box h2{
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+.main.login .login_box h3{
+  font-size: 2.4rem;
+  margin-bottom: 50px;
+  font-weight: 200;
+}
+.main.login .login_box form {
+  display: flex;
+  border-radius: 0 0 0 25px;
+  flex-direction: column;
+}
+.main.login .login_box form input {
+  width: 100%;
+  height: 60px;
+  background: #fff9cb;
+  border-radius: 12px;
+  padding-left: 30px;
+  border: 0;
+  border: 1px solid #ffbd7b;
+  margin-bottom: 20px;
+  color: #000;
+  font-size: 1.8rem;
+}
+.main.login .login_box form input::placeholder {
+  font-size: 1.8rem;
+  letter-spacing: 0.3px;
+  color: rgb(45, 45, 45);
+}
+.main.login .login_box form button {
+  height: 60px;
+  margin-top: 15px;
+  background-color: #ffbd7b;
+  border-radius: 12px;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+}
+.main.login .login_box form button:hover{
+  background-color: #f8b26d;
+}
+.main.login .login_box form p{
+  color: rgb(45, 45, 45);
+  font-size: 1.6rem;
+  margin-top: 10px;
+}
+.main.login .login_box form span{
+  color: #f8b26d;
+  cursor: pointer;
+}
+.main.login .login_box form span:hover{
+  color: #ff962e;
+}
 /* 상담 본문 */
 .dashboard .main .chat_container{
   display: flex;
@@ -116,8 +193,8 @@ body{
   height: 85%;
   overflow-y: scroll;
   display:flex;
-  justify-content: space-between;
-  flex-direction: column-reverse;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 /* 스크롤바 */
 .dashboard .chatting .talk_wrap::-webkit-scrollbar {

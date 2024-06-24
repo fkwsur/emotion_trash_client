@@ -6,41 +6,63 @@ const socket = socketio.connect("http://localhost:8081/");
 export const Chatting = (props) => {
         const [chatList, setChatList] = useState("");
         const [chat, setChat] = useState("");
-        let sample_chat = [
-          {
-            user: "system",
-            chat: "그럼 얼마든지 얘기해봐",
-          },
-          {
-            user: "user",
-            chat: "우울해 우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해",
-          },
-          {
-            user: "system",
-            chat: "그럼 얼마든지 얘기해봐",
-          },
-          {
-            user: "user",
-            chat: "니가 고민 상담 해준다매",
-          },
-          {
-            user: "system",
-            chat: "오늘은 무슨 일로 찾아왔니? 나는 너의 고민을 도와주는 감쓰통이야 연애상담이라면 나에게 맡겨",
-          },
-        ];
-      
+
         useEffect(() => {
-              setChatList(sample_chat)
+          List()
+        })
+
+        useEffect(() => {
+          onRoomClick()
         },[])
+      
+        const List = async () => {
+          await socket.on('chatting', (obj) => {
+            setChatList(obj);
+          });
+          let mySpace = document.getElementById("scroll");
+          mySpace.scrollTop = mySpace.scrollHeight;
+        }
+
+        const onRoomClick = async (k) => {
+          await socket.emit('roomName', "현지");
+        }
+
+
+        // let sample_chat = [
+        //   {
+        //     user: "system",
+        //     chat: "그럼 얼마든지 얘기해봐",
+        //   },
+        //   {
+        //     user: "user",
+        //     chat: "우울해 우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해",
+        //   },
+        //   {
+        //     user: "system",
+        //     chat: "그럼 얼마든지 얘기해봐",
+        //   },
+        //   {
+        //     user: "user",
+        //     chat: "니가 고민 상담 해준다매",
+        //   },
+        //   {
+        //     user: "system",
+        //     chat: "오늘은 무슨 일로 찾아왔니? 나는 너의 고민을 도와주는 감쓰통이야 연애상담이라면 나에게 맡겨",
+        //   },
+        // ];
+      
+        // useEffect(() => {
+        //       setChatList(sample_chat)
+        // },[])
       
         const onSubmit = async(e) => {
           e.preventDefault();
-          setChatList([{
-              user: "user",
-              chat: chat,
-            },...chatList])
+          setChatList([...chatList,{
+            role: "user",
+            content: chat,
+            }])
             await socket.emit('chat', chat);
-                let mySpace = document.getElementById("scroll");
+            let mySpace = document.getElementById("scroll");
             mySpace.scrollTop = mySpace.scrollHeight;
             setChat("")
         };
@@ -51,9 +73,9 @@ export const Chatting = (props) => {
               <div className="talk_wrap" id="scroll">
                 {chatList ? chatList.map((k, i) => {
                       return (
-                        <div className={`talk ${k.user}`}>
+                        <div className={`talk ${k.role}`}>
                           <img src={counselor} alt="상담원 이미지" />
-                          <p>{k.chat}</p>
+                          <p>{k.content}</p>
                         </div>
                       );
                     })
