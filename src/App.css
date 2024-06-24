@@ -115,7 +115,7 @@ body{
 }
 .main.login .login_box .title_wrap{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 44% 56%;
   align-items: center;
   justify-items: start;
   margin: 0 0 50px;
