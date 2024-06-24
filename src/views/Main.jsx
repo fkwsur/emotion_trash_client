@@ -38,7 +38,7 @@ export const Main = () => {
             </li>
           </ul>
         </div>
-        <div className="profile">
+        <div className="profile login_btn">
           <button onClick={() => setMenu("auth")}>로그인</button>
         </div>
         {/* <div className="profile">

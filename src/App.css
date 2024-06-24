@@ -71,7 +71,9 @@ body{
 .profile img{
   width: 40%;
 }
-
+.login_btn button{
+  font-size: 1.8rem;
+}
 /* 메인 */
 .dashboard{
   width: 100%;
@@ -116,15 +118,17 @@ body{
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: start;
-  margin: 0 30px 50px;
+  margin: 0 0 50px;
 }
 .main.login .login_box img {
+  place-self: center;
   height: 120px;
   object-fit: cover;
   grid-column: 1/2;
   grid-row: 1/3;
 }
 .main.login .login_box h2{
+    justify-items: start;
   font-size: 2.4rem;
   font-weight: 400;
 }
