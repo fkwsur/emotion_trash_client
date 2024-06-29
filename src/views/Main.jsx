@@ -39,7 +39,7 @@ export const Main = () => {
           </ul>
         </div>
         <div className="profile login_btn">
-          <button onClick={() => setMenu("auth")}>로그인</button>
+          <button onClick={() => setMenu("auth")}>로그인 / 회원가입</button>
         </div>
         {/* <div className="profile">
           <img src={profile} alt="" /> <p>김현지님</p>

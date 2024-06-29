@@ -99,18 +99,21 @@ body{
 /* 로그인 */
 .main.login{
   display: grid;
-  place-content: center;
+  place-items: center;
   grid-template-rows : 1fr;
   align-items: center;
   background-color: #fffce7;
+  overflow: auto;
+}
+.main.login h2{
+  margin-bottom: 2%;
 }
 .main.login .login_box {
   box-shadow: 0 4px 4px 3px rgba(102, 102, 102, 0.2);
   background-color:#fdfaf6;
   width: 700px;
   border-radius: 25px;
-  padding: 60px 100px;
-  text-align: center;
+  padding: 40px 100px;
   margin-left: 0 auto;
 }
 .main.login .login_box .title_wrap{
@@ -146,7 +149,7 @@ body{
   height: 60px;
   background: #fff9cb;
   border-radius: 12px;
-  padding-left: 30px;
+  padding: 0 30px;
   border: 0;
   border: 1px solid #ffbd7b;
   margin-bottom: 20px;
@@ -172,7 +175,7 @@ body{
 .main.login .login_box form p{
   color: rgb(45, 45, 45);
   font-size: 1.6rem;
-  margin-top: 10px;
+  margin: 10px 0;
 }
 .main.login .login_box form span{
   color: #f8b26d;
@@ -180,6 +183,13 @@ body{
 }
 .main.login .login_box form span:hover{
   color: #ff962e;
+}
+.main.login .login_box .signup{
+  display: grid;
+  grid-gap: 10px;
+}
+.main.login .login_box form .help_login{
+  text-align: center;
 }
 /* 상담 본문 */
 .dashboard .main .chat_container{
