@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../image/trash.png";
+import axios from "axios";
 
 export const Auth = () => {
   const [userId, setUserId] = useState("");
@@ -97,16 +98,62 @@ export const SignUp = (props) => {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [phone, setPhone] = useState("");
-  const [birth, seBirth] = useState("");
+  const [birth, seBirth] = useState(null);
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(null);
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const regexUserId = /^[A-Za-z]{1}[A-Za-z0-9]{3,19}$/;
+    const regexName = /^[가-힣a-zA-Z\s]+$/;
+    const regexNumber = /^[0-9]{2,3}[0-9]{3,4}[0-9]{4}$/;
+    const regexEmail =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (regexUserId.test(userId) === false) {
+      return alert(
+        "길이 4~20자 및 영문으로 시작하는 영문이나 숫자 조합의 아이디를 입력해주세요."
+      );
+    } 
+    // else if (isChecked === false) {
+    //   return alert("계정 중복확인을 진행해주세요.");
+    // } 
+    else if (regexName.test(nickname) === false) {
+      return alert("닉네임은 한글 또는 영문만 입력해주세요.(단일 자음, 모음 불가)");
+    } else if (regexEmail.test(email) === false) {
+      return alert("이메일 형식이 맞지 않습니다.");
+    } else if (regexNumber.test(phone) === false) {
+      return alert("전화번호 양식이 맞지 않습니다.");
+    } 
+    // else if (acceptCheckBox === false) {
+    //   return alert("이용약관에 동의해 주세요.");
+    // }
     try {
-      console.log("하이");
-    } catch (error) {
-      console.log(error);
+      await axios
+        .post("http://localhost:8081/api/v1/user/signup", {
+          oauth_id: userId,
+          nickname: nickname,
+          app_key: password,
+          phone: phone,
+          email: email,
+          gender: gender,
+          birth: birth,
+          platform: "own",
+        })
+        .then((res) => {
+          if (res.data.result) {
+            alert("가입이 완료되었습니다.");
+            props.setIsAuth("signin")
+          }
+          if (res.data.error) {
+            console.log(res.data.error)
+            alert(res.data.error.text);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -152,7 +199,6 @@ export const SignUp = (props) => {
         <p>휴대폰번호 ('-' 없이 전화번호만 입력해주세요)</p>
         <input
           type="text"
-          // oninput={phone}
           name="phone"
           value={phone}
           onChange={(e) =>
@@ -170,31 +216,44 @@ export const SignUp = (props) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p>생년월일 (*선택)</p>
-        <input
-          type="date"
-          name="birth"
-          value={birth}
-          onChange={(e) => seBirth(e.target.value)}
-        />
-
-        <p>성별 (*선택)</p>
-        여자
-        <input
-          type="checkbox"
-          name="gender"
-          value="female"
-          checked={gender == "female" ? true : false}
-          onChange={(e) => gender == "female" ? setGender("") : setGender(e.target.value)}
-        />
-        남자
-        <input
-          type="checkbox"
-          name="gender"
-          value="male"
-          checked={gender == "male" ? true : false}
-          onChange={(e) => gender == "male" ? setGender("") : setGender(e.target.value)}
-        />
+        <div className="input_wrap">
+          <div>
+            <p>생년월일 (*선택)</p>
+            <input
+              type="date"
+              name="birth"
+              value={birth}
+              onChange={(e) => seBirth(e.target.value)}
+            />
+          </div>
+          <div>
+            <p>성별 (*선택)</p>
+            <div className="gender">
+              <p>여성</p>
+              <input
+                type="checkbox"
+                name="gender"
+                value="female"
+                checked={gender == "female" ? true : false}
+                onChange={(e) =>
+                  gender == "female"
+                    ? setGender(null)
+                    : setGender(e.target.value)
+                }
+              />
+              <p>남성</p>
+              <input
+                type="checkbox"
+                name="gender"
+                value="male"
+                checked={gender == "male" ? true : false}
+                onChange={(e) =>
+                  gender == "male" ? setGender(null) : setGender(e.target.value)
+                }
+              />
+            </div>
+          </div>
+        </div>
         <button type="submit" className="btn">
           가입완료
         </button>

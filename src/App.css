@@ -1,45 +1,45 @@
-body{
-  background-color: #F8F2EB;
+body {
+  background-color: #f8f2eb;
   letter-spacing: 0.5;
 }
 
-.App{
-  display: flex; 
+.App {
+  display: flex;
   height: 100vh;
   overflow: hidden;
 }
 
 /* 헤더 */
-.header{
+.header {
   position: fixed;
   background-color: #fff9cb;
   z-index: 1;
-  width: 12%; 
+  width: 12%;
   height: 100vh;
   box-shadow: 0 4px 4px 3px rgba(102, 102, 102, 0.2);
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   flex-direction: column;
   /* border-radius: 0 10px 10px 0; */
 }
-.header .logo{
+.header .logo {
   width: 30%;
   height: 30%;
   display: flex;
   align-items: center;
 }
-.header .logo img{
- width: 100%;
+.header .logo img {
+  width: 100%;
 }
-.header .nav{
+.header .nav {
   width: 100%;
   height: 50%;
-  font-weight: 400; 
+  font-weight: 400;
   font-size: 2.2rem;
   margin: 0 0 70% 0;
 }
-.header .nav ul{
+.header .nav ul {
   justify-content: space-around;
   width: 100%;
   height: 100%;
@@ -47,81 +47,84 @@ body{
   grid-template-columns: 1fr;
   place-content: center;
 }
-.header .nav ul li{
+.header .nav ul li {
   height: 70px;
   line-height: 70px;
 }
-.header .nav ul li button{
+.header .nav ul li button {
   width: 100%;
   height: 100%;
   font-size: 2.2rem;
 }
-.header .nav ul li:hover{
+.header .nav ul li:hover {
   cursor: pointer;
   background-color: #fff5ab;
 }
-.header .nav ul li button svg{margin-right: 10px;}
-.profile{
+.header .nav ul li button svg {
+  margin-right: 10px;
+}
+.profile {
   height: 20%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 1.2rem;
 }
-.profile img{
+.profile img {
   width: 40%;
 }
-.login_btn button{
+.login_btn button {
   font-size: 1.8rem;
 }
 /* 메인 */
-.dashboard{
+.dashboard {
   width: 100%;
   max-height: 100vh;
   display: grid;
   grid-template-rows: 1fr 9fr;
 }
-.dashboard .main{
+.dashboard .main {
   height: 95vh;
   margin-left: 12%;
-  padding : 3% 3% 3% 3%;
+  padding: 3% 3% 3% 3%;
   display: grid;
   grid-template-rows: 1fr 9fr;
-
 }
-.dashboard .main.love{  background-color: #f9bfbf;}
-.dashboard .main.tarot{  background-color: #c9bff9;}
-.dashboard .main h2{
+.dashboard .main.love {
+  background-color: #f9bfbf;
+}
+.dashboard .main.tarot {
+  background-color: #c9bff9;
+}
+.dashboard .main h2 {
   margin-top: 1%;
   font-size: 2rem;
   font-weight: 400;
 }
 /* 로그인 */
-.main.login{
+.main.login {
   display: grid;
   place-items: center;
-  grid-template-rows : 1fr;
-  align-items: center;
   background-color: #fffce7;
   overflow: auto;
 }
-.main.login h2{
+.main.login h2 {
   margin-bottom: 2%;
 }
 .main.login .login_box {
   box-shadow: 0 4px 4px 3px rgba(102, 102, 102, 0.2);
-  background-color:#fdfaf6;
-  width: 700px;
+  background-color: #fdfaf6;
+  width: 600px;
   border-radius: 25px;
   padding: 40px 100px;
   margin-left: 0 auto;
 }
-.main.login .login_box .title_wrap{
+.main.login .login_box .title_wrap {
   display: grid;
   grid-template-columns: 44% 56%;
   align-items: center;
   justify-items: start;
-  margin: 0 0 50px;
+  margin: 0 0 30px;
 }
 .main.login .login_box img {
   place-self: center;
@@ -130,12 +133,12 @@ body{
   grid-column: 1/2;
   grid-row: 1/3;
 }
-.main.login .login_box h2{
-    justify-items: start;
+.main.login .login_box h2 {
+  justify-items: start;
   font-size: 2.4rem;
   font-weight: 400;
 }
-.main.login .login_box h3{
+.main.login .login_box h3 {
   font-size: 2rem;
   font-weight: 200;
 }
@@ -146,18 +149,18 @@ body{
 }
 .main.login .login_box form input {
   width: 100%;
-  height: 60px;
+  height: 50px;
   background: #fff9cb;
   border-radius: 12px;
-  padding: 0 30px;
+  padding: 0 20px;
   border: 0;
   border: 1px solid #ffbd7b;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #000;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 .main.login .login_box form input::placeholder {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   letter-spacing: 0.3px;
   color: rgb(45, 45, 45);
 }
@@ -169,50 +172,70 @@ body{
   font-size: 1.8rem;
   margin-bottom: 30px;
 }
-.main.login .login_box form button:hover{
+.main.login .login_box form button:hover {
   background-color: #f8b26d;
 }
-.main.login .login_box form p{
+.main.login .login_box form p {
   color: rgb(45, 45, 45);
   font-size: 1.6rem;
   margin: 10px 0;
 }
-.main.login .login_box form span{
+.main.login .login_box form span {
   color: #f8b26d;
   cursor: pointer;
 }
-.main.login .login_box form span:hover{
+.main.login .login_box form span:hover {
   color: #ff962e;
 }
-.main.login .login_box .signup{
+.main.login .login_box .signup {
   display: grid;
-  grid-gap: 10px;
 }
-.main.login .login_box form .help_login{
+.main.login .login_box form .help_login {
   text-align: center;
 }
+.main.login .login_box form .input_wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: start;
+  grid-gap: 15px;
+}
+.main.login .login_box form .gender {
+  display: flex;
+  align-items: center;
+}
+.main.login .login_box form .gender p {
+  font-size: 1.4rem;
+}
+.main.login .login_box form input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  margin: 0 20px 0 10px;
+}
 /* 상담 본문 */
-.dashboard .main .chat_container{
+.dashboard .main .chat_container {
   display: flex;
   justify-content: space-between;
   max-height: 100%;
   min-height: 10%;
 }
 /* 채팅 */
-.dashboard .chatting{
+.dashboard .chatting {
   width: 77%;
-  background-color: #FDF6F6;
+  background-color: #fdf6f6;
   border-radius: 15px;
   box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2);
 }
-.dashboard .tarot .chatting{  background-color: #f8f6fd;}
-.dashboard .chatting .talk_wrap{
+.dashboard .tarot .chatting {
+  background-color: #f8f6fd;
+}
+.dashboard .chatting .talk_wrap {
   width: 100%;
   margin-top: 35px;
   padding: 0 35px 0px 55px;
   height: 85%;
   overflow-y: scroll;
-  display:flex;
+  display: flex;
   justify-content: flex-start;
   flex-direction: column;
 }
@@ -220,44 +243,45 @@ body{
 .dashboard .chatting .talk_wrap::-webkit-scrollbar {
   width: 20px;
 }
-.dashboard .chatting .talk_wrap::-webkit-scrollbar-track{
-  background-color: #FDF6F6;
+.dashboard .chatting .talk_wrap::-webkit-scrollbar-track {
+  background-color: #fdf6f6;
 }
-.dashboard .chatting .talk_wrap::-webkit-scrollbar-thumb{
+.dashboard .chatting .talk_wrap::-webkit-scrollbar-thumb {
   width: 5px;
-  background-color: #F3EEE8;
-  border: 5px solid #FDF6F6;
+  background-color: #f3eee8;
+  border: 5px solid #fdf6f6;
   border-radius: 10px;
 }
-.dashboard .chatting .talk{
+.dashboard .chatting .talk {
   width: 100%;
   display: flex;
   align-items: flex-start;
   margin-bottom: 25px;
   padding-right: 30%;
 }
-.dashboard .chatting .talk.user{
+.dashboard .chatting .talk.user {
   flex-direction: row-reverse;
   padding-right: 0;
   padding-left: 30%;
 }
-.dashboard .chatting .talk p{
+.dashboard .chatting .talk p {
   padding: 15px 20px;
   margin: 0 20px;
   font-size: 1.6rem;
   background-color: #fff;
   border-radius: 25px;
 }
-.dashboard .chatting form{
+.dashboard .chatting form {
   display: flex;
   align-items: center;
   height: 10%;
   padding: 0 55px;
   z-index: 210;
 }
-.dashboard .chatting form input{
+.dashboard .chatting form input {
   border: 1px solid #fff;
-  width: 92%; height: 60%;
+  width: 92%;
+  height: 60%;
   background: #fff;
   padding-left: 20px;
   border-radius: 15px 0 0 15px;
@@ -268,43 +292,46 @@ body{
   letter-spacing: 0.3px;
   color: #959595;
 }
-.dashboard .chatting form button{
-  width: 8%; height: 60%;
+.dashboard .chatting form button {
+  width: 8%;
+  height: 60%;
   background-color: inherit;
   color: #fff;
-  border: 1px solid #FF9696;
+  border: 1px solid #ff9696;
   border-radius: 0 15px 15px 0;
-  background-color: #FF9696;
+  background-color: #ff9696;
   font-size: 1.8rem;
 }
-.dashboard .tarot .chatting form button{
+.dashboard .tarot .chatting form button {
   border: 1px solid #7774ff;
   background-color: #7774ff;
 }
 
 /* 상담기록 카드 */
-.dashboard .chatcard{
+.dashboard .chatcard {
   width: 20%;
   display: grid;
   grid-template-rows: 1fr 9fr;
-  background-color: #FDF6F6;
+  background-color: #fdf6f6;
   border-radius: 15px;
   box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2);
 }
-.dashboard .tarot .chatcard{  background-color: #f8f6fd;}
-.dashboard .chatcard button{
+.dashboard .tarot .chatcard {
+  background-color: #f8f6fd;
+}
+.dashboard .chatcard button {
   display: flex;
   align-items: flex-start;
   margin-bottom: 15px;
   padding: 30px 30px 0 30px;
 }
-.dashboard .chatcard button h3{
+.dashboard .chatcard button h3 {
   margin-right: 10px;
 }
-.dashboard .chatcard button img{
+.dashboard .chatcard button img {
   width: 17px;
 }
-.dashboard .chatcard .card_container{
+.dashboard .chatcard .card_container {
   overflow-y: scroll;
   padding: 0 10px 0 30px;
   margin-bottom: 30px;
@@ -313,54 +340,53 @@ body{
 .dashboard .chatcard .card_container::-webkit-scrollbar {
   width: 20px;
 }
-.dashboard .chatcard .card_container::-webkit-scrollbar-track{
-  background-color: #FDF6F6;
+.dashboard .chatcard .card_container::-webkit-scrollbar-track {
+  background-color: #fdf6f6;
 }
-.dashboard .chatcard .card_container::-webkit-scrollbar-thumb{
+.dashboard .chatcard .card_container::-webkit-scrollbar-thumb {
   width: 5px;
-  background-color: #F3EEE8;
-  border: 5px solid #FDF6F6;
+  background-color: #f3eee8;
+  border: 5px solid #fdf6f6;
   border-radius: 10px;
 }
-.dashboard .chatcard .card_container .card{
+.dashboard .chatcard .card_container .card {
   border-radius: 15px;
   padding: 20px;
   font-size: 1.2rem;
   margin-bottom: 15px;
-  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2)
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.2);
 }
-.dashboard .chatcard .card_container .card .title{
+.dashboard .chatcard .card_container .card .title {
   display: flex;
   justify-content: space-between;
 }
-.dashboard .chatcard .card_container .card .title h3{
+.dashboard .chatcard .card_container .card .title h3 {
   font-weight: 500;
 }
-.dashboard .chatcard .card_container .card .title h4{
+.dashboard .chatcard .card_container .card .title h4 {
   font-weight: 400;
   font-size: 1.5rem;
 }
-.dashboard .chatcard .card_container .card p{
+.dashboard .chatcard .card_container .card p {
   margin-top: 15px;
   padding: 10px 15px;
   border-radius: 15px;
 }
-.dashboard .chatcard .card.love{
-  background-color: #FFDAE3;
+.dashboard .chatcard .card.love {
+  background-color: #ffdae3;
 }
-.dashboard .chatcard .card.love p{
-  background-color: #FFECEC;
+.dashboard .chatcard .card.love p {
+  background-color: #ffecec;
 }
-.dashboard .chatcard .card.tarot{
-  background-color: #EEE0FF;
+.dashboard .chatcard .card.tarot {
+  background-color: #eee0ff;
 }
-.dashboard .chatcard .card.tarot p{
-  background-color: #F6EEFF;
+.dashboard .chatcard .card.tarot p {
+  background-color: #f6eeff;
 }
-
 
 /* 푸터 */
-.dashboard .footer{
+.dashboard .footer {
   margin-left: 12%;
   background-color: #eeeae67a;
   height: 5vh;
