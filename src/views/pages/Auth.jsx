@@ -8,7 +8,7 @@ export const Auth = () => {
   return (
     <div className="main login">
       {window.sessionStorage.getItem("xauth") ? (
-       <Router.MyPage />
+        <Router.MyPage />
       ) : (
         <>
           {isAuth == "signin" ? (
@@ -45,11 +45,14 @@ export const SignIn = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Router.CustomAxios.post("http://localhost:8081/api/v1/user/signin", {
+      await Router.CustomAxios.post(
+        "http://localhost:8081/api/v1/user/signin",
+        {
           oauth_id: userId,
           app_key: password,
           platform: "own",
-        })
+        }
+      )
         .then((res) => {
           if (res.data.error) {
             console.log(res.data.error);
@@ -62,6 +65,8 @@ export const SignIn = (props) => {
               "rxauth",
               res.data.refreshauthorization
             );
+            window.location.replace("/mypage");
+            return;
           }
         })
         .catch((err) => {
@@ -117,6 +122,7 @@ export const SignUp = (props) => {
   const [birth, seBirth] = useState(null);
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState(null);
+  const [isChecked, setIsChecked] = useState(false)
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -129,11 +135,9 @@ export const SignUp = (props) => {
       return alert(
         "길이 4~20자 및 영문으로 시작하는 영문이나 숫자 조합의 아이디를 입력해주세요."
       );
-    }
-    // else if (isChecked === false) {
-    //   return alert("계정 중복확인을 진행해주세요.");
-    // }
-    else if (regexName.test(nickname) === false) {
+    }else if (isChecked === false) {
+      return alert("계정 중복확인을 진행해주세요.");
+    }else if (regexName.test(nickname) === false) {
       return alert(
         "닉네임은 한글 또는 영문만 입력해주세요.(단일 자음, 모음 불가)"
       );
@@ -146,7 +150,9 @@ export const SignUp = (props) => {
     //   return alert("이용약관에 동의해 주세요.");
     // }
     try {
-      await Router.CustomAxios.post("http://localhost:8081/api/v1/user/signup", {
+      await Router.CustomAxios.post(
+        "http://localhost:8081/api/v1/user/signup",
+        {
           oauth_id: userId,
           nickname: nickname,
           app_key: password,
@@ -155,15 +161,19 @@ export const SignUp = (props) => {
           gender: gender,
           birth: birth,
           platform: "own",
-        })
+        }
+      )
         .then((res) => {
           if (res.data.result) {
             alert("가입이 완료되었습니다.");
             props.setIsAuth("signin");
           }
           if (res.data.error) {
-            console.log(res.data.error);
-            alert(res.data.error.text);
+            if(res.data.error.includes("SequelizeUniqueConstraintError") == true){
+              alert("이미 가입되어 있는 이메일 정보입니다.")
+            }else{
+              alert(res.data.error.text);
+            }
           }
         })
         .catch((err) => {
@@ -174,18 +184,54 @@ export const SignUp = (props) => {
     }
   };
 
+
+  const CheckClick = async () => {
+    if (!userId) {
+        alert("가입하실 아이디를 입력해주세요.")
+        return
+    }
+    try {
+        await Router.CustomAxios.get("http://localhost:8081/api/v1/user/check/oauthid", {
+            params: {
+              oauth_id: userId
+            }
+        })
+            .then(res => {
+                if (res.data.error) {
+                    alert(res.data.error.text);
+                    return
+                }
+                if (res.data) {
+                    if (res.data.result === true) {
+                        setIsChecked(true)
+                        alert("가입가능한 계정입니다.")
+                        return
+                    }
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
   return (
     <>
       <form onSubmit={onSubmit} className="signup">
+        <div className="user_id">
         <p>아이디</p>
         <input
           type="text"
           name="userId"
           value={userId}
-          onChange={(e) => setUserId(e.target.value)}
+          onChange={(e) => {setUserId(e.target.value);setIsChecked(false)}}
+          className="user_id"
           required
         />
-
+        <button type="button" className="check_id" onClick={CheckClick}>중복확인</button>
+        </div>
         <p>닉네임</p>
         <input
           type="text"

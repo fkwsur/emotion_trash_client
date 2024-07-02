@@ -8,9 +8,9 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import Router from "..";
+import { NavLink } from "react-router-dom";
 
 export const Main = () => {
-  const [menu, setMenu] = useState("");
   return (
     <>
       <div className="header">
@@ -19,41 +19,37 @@ export const Main = () => {
         </div>
         <div className="nav">
           <ul>
-            {/* <li>
-              <button onClick={() => setMenu("")}>
-                <FontAwesomeIcon icon={faHeart} />감쓰통 소개
-              </button>
-            </li> */}
             <li>
-              <button onClick={() => setMenu("love")}>
+              <NavLink to={`/love`}>
                 <FontAwesomeIcon icon={faHeart} /> 연애
-              </button>
+              </NavLink>
             </li>
             <li>
-              <button onClick={() => setMenu("tarot")}>
+              <NavLink to={`/tarot`}>
                 <FontAwesomeIcon icon={faStarAndCrescent} /> 타로
-              </button>
+              </NavLink>
             </li>
             <li>
-              <button onClick={() => setMenu("subscribe")}>
+              <NavLink to={`/subscribe`}>
                 <FontAwesomeIcon icon={faAddressCard} /> 구독
-              </button>
+              </NavLink>
             </li>
           </ul>
         </div>
         <div className="profile login_btn">
           {window.sessionStorage.getItem("xauth") ? (
-            <button onClick={() => setMenu("mypage")}>
+            <NavLink to={`/mypage`}>
               <div className="profile">
                 <img src={profile} alt="" /> <p>김현지님</p>
               </div>{" "}
-            </button>
+            </NavLink>
           ) : (
-            <button onClick={() => setMenu("auth")}>로그인 / 회원가입</button>
+            <NavLink to={`/auth`}>로그인 / 회원가입
+            </NavLink>
           )}
         </div>
       </div>
-      <Router.DashBoard menu={menu} />
+      <Router.DashBoard />
     </>
   );
 };
