@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import counselor from "../../image/counselor.png";
+
 import socketio from "socket.io-client";
 const socket = socketio.connect("http://localhost:8081/");
 
@@ -26,34 +27,6 @@ export const Chatting = (props) => {
         const onRoomClick = async (k) => {
           await socket.emit('roomName', "현지");
         }
-
-
-        // let sample_chat = [
-        //   {
-        //     user: "system",
-        //     chat: "그럼 얼마든지 얘기해봐",
-        //   },
-        //   {
-        //     user: "user",
-        //     chat: "우울해 우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해우울해",
-        //   },
-        //   {
-        //     user: "system",
-        //     chat: "그럼 얼마든지 얘기해봐",
-        //   },
-        //   {
-        //     user: "user",
-        //     chat: "니가 고민 상담 해준다매",
-        //   },
-        //   {
-        //     user: "system",
-        //     chat: "오늘은 무슨 일로 찾아왔니? 나는 너의 고민을 도와주는 감쓰통이야 연애상담이라면 나에게 맡겨",
-        //   },
-        // ];
-      
-        // useEffect(() => {
-        //       setChatList(sample_chat)
-        // },[])
       
         const onSubmit = async(e) => {
           e.preventDefault();

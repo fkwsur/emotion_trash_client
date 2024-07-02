@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Love } from "../views/page/Love";
-import { Tarot } from "../views/page/Tarot";
-import { Auth } from "../views/page/Auth";
-import counselor from "../image/counselor.png";
+import Router from "..";
 
 export const DashBoard = (props) => {
   return (
     <div className="dashboard">
         {props.menu == "love" ? (
-          <Love />
+          <Router.Love />
         ) : props.menu == "tarot" ? (
-          <Tarot />
+          <Router.Tarot />
         ) : props.menu == "auth" ? (
-          <Auth />
-        ): (
+          <Router.Auth />
+        ):  props.menu == "mypage" ? (
+          <Router.MyPage />
+        ):(
           ""
         )}
       <div className="footer">

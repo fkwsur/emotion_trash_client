@@ -1,12 +1,13 @@
-import React from "react";
-import {Main} from "./views/Main";
+import React from 'react';
 import "./App.css";
+import { Route,Routes } from 'react-router-dom'
+import Router from "./views";
 
 const App = () => {
 
   return (
     <div className="App">
-     <Main />
+          <Route exact path="/" component={Router.Main} />
     </div>
   );
 }

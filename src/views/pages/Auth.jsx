@@ -1,44 +1,39 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../image/trash.png";
-import axios from "axios";
+import Router from "..";
 
 export const Auth = () => {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
   const [isAuth, setIsAuth] = useState("signin");
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      console.log("하이");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="main login">
-      {isAuth == "signin" ? (
-        <h2>로그인</h2>
-      ) : isAuth == "signup" ? (
-        <h2>회원가입</h2>
+      {window.sessionStorage.getItem("xauth") ? (
+       <Router.MyPage />
       ) : (
-        ""
+        <>
+          {isAuth == "signin" ? (
+            <h2>로그인</h2>
+          ) : isAuth == "signup" ? (
+            <h2>회원가입</h2>
+          ) : (
+            ""
+          )}
+          <div className="login_box">
+            <div className="title_wrap">
+              <img src={logo} alt="logo" />
+              <h2>감쓰통</h2>
+              <h3>당신을 위한 감정 쓰레기통</h3>
+            </div>
+            {isAuth == "signin" ? (
+              <SignIn setIsAuth={setIsAuth} />
+            ) : isAuth == "signup" ? (
+              <SignUp setIsAuth={setIsAuth} />
+            ) : (
+              ""
+            )}
+          </div>
+        </>
       )}
-      <div className="login_box">
-        <div className="title_wrap">
-          <img src={logo} alt="logo" />
-          <h2>감쓰통</h2>
-          <h3>당신을 위한 감정 쓰레기통</h3>
-        </div>
-        {isAuth == "signin" ? (
-          <SignIn setIsAuth={setIsAuth} />
-        ) : isAuth == "signup" ? (
-          <SignUp setIsAuth={setIsAuth} />
-        ) : (
-          ""
-        )}
-      </div>
     </div>
   );
 };
@@ -50,9 +45,30 @@ export const SignIn = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("하이");
-    } catch (error) {
-      console.log(error);
+      await Router.CustomAxios.post("http://localhost:8081/api/v1/user/signin", {
+          oauth_id: userId,
+          app_key: password,
+          platform: "own",
+        })
+        .then((res) => {
+          if (res.data.error) {
+            console.log(res.data.error);
+            alert(res.data.error.text);
+          }
+          if (res.data) {
+            alert("로그인이 완료되었습니다.");
+            window.sessionStorage.setItem("xauth", res.data.authorization);
+            window.localStorage.setItem(
+              "rxauth",
+              res.data.refreshauthorization
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -113,23 +129,24 @@ export const SignUp = (props) => {
       return alert(
         "길이 4~20자 및 영문으로 시작하는 영문이나 숫자 조합의 아이디를 입력해주세요."
       );
-    } 
+    }
     // else if (isChecked === false) {
     //   return alert("계정 중복확인을 진행해주세요.");
-    // } 
+    // }
     else if (regexName.test(nickname) === false) {
-      return alert("닉네임은 한글 또는 영문만 입력해주세요.(단일 자음, 모음 불가)");
+      return alert(
+        "닉네임은 한글 또는 영문만 입력해주세요.(단일 자음, 모음 불가)"
+      );
     } else if (regexEmail.test(email) === false) {
       return alert("이메일 형식이 맞지 않습니다.");
     } else if (regexNumber.test(phone) === false) {
       return alert("전화번호 양식이 맞지 않습니다.");
-    } 
+    }
     // else if (acceptCheckBox === false) {
     //   return alert("이용약관에 동의해 주세요.");
     // }
     try {
-      await axios
-        .post("http://localhost:8081/api/v1/user/signup", {
+      await Router.CustomAxios.post("http://localhost:8081/api/v1/user/signup", {
           oauth_id: userId,
           nickname: nickname,
           app_key: password,
@@ -142,10 +159,10 @@ export const SignUp = (props) => {
         .then((res) => {
           if (res.data.result) {
             alert("가입이 완료되었습니다.");
-            props.setIsAuth("signin")
+            props.setIsAuth("signin");
           }
           if (res.data.error) {
-            console.log(res.data.error)
+            console.log(res.data.error);
             alert(res.data.error.text);
           }
         })
