@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Router from "..";
-import { Route,NavLink } from 'react-router-dom'
-export const DashBoard = (props) => {
+import { Route,useLocation } from 'react-router-dom'
+
+export const DashBoard = () => {
+  const pathname = useLocation();
   return (
-    <div className="dashboard">
+    <div className={pathname.pathname == "/mypage" ? "dashboard mypage_dashboard" : "dashboard"}>
       <Route exact path="/love" component={Router.Love} />
       <Route exact path="/tarot" component={Router.Tarot} />
       <Route exact path="/auth" component={Router.Auth} />

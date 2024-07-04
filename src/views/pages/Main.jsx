@@ -37,7 +37,7 @@ export const Main = () => {
           </ul>
         </div>
         <div className="profile login_btn">
-          {window.sessionStorage.getItem("xauth") ? (
+          {window.sessionStorage.getItem("authorization") ? (
             <NavLink to={`/mypage`}>
               <div className="profile">
                 <img src={profile} alt="" /> <p>김현지님</p>

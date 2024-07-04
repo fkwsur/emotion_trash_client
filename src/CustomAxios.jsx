@@ -20,15 +20,15 @@ CustomAxios.interceptors.request.use(
 );
 CustomAxios.interceptors.response.use(
     async (response) => {
-        if ((response.data.error || '').toString().includes("io.jsonwebtoken") == true) {
+        if (response.data.expired == true){
             const getToken = await axios.get("http://localhost:8081/api/v1/user/issue/token", {
                 headers: {
-                    rxauth: window.localStorage.getItem("rxauth"),
+                    refreshauthorization: window.localStorage.getItem("refreshauthorization"),
                 }
             });
             console.log(getToken.data, "response toekn ==============================================================================")
-            window.localStorage.setItem("xauth", getToken.data.xauth);
-            response.config.headers.xauth = getToken.data.xauth
+            window.sessionStorage.setItem("authorization", getToken.data.authorization);
+            response.config.headers.authorization = getToken.data.authorization
             return CustomAxios(response.config);
         } else {
             return response
