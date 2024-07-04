@@ -17,6 +17,7 @@ export const MyPage = () => {
   const [isChangeInfo, setIsChangeInfo] = useState(false);
   const [isChangePhone, setIsChangePhone] = useState(false);
   const [isChangePassword, setIsChangePassword] = useState(false);
+  const [isUnregister, setIsUnregister] = useState(false);
 
   useEffect(() => {
     GetUserInfo();
@@ -125,10 +126,10 @@ export const MyPage = () => {
         alert(
           "새 비밀번호는 하나 이상의 문자, 숫자 ,특수 문자(@$!%*?&)를 입력해주세요."
         );
-        return
+        return;
       } else if (passwordCheck.length >= 1 && newPassword !== passwordCheck) {
         alert("비밀번호 확인이 일치하지 않습니다.");
-        return
+        return;
       }
       await Router.CustomAxios.post(
         "http://localhost:8081/api/v1/user/update/password",
@@ -149,10 +150,44 @@ export const MyPage = () => {
           }
           if (res.data.result) {
             alert("수정이 완료되었습니다.");
-            setPassword("")
-            setPasswordCheck("")
-            setNewPassword("")
-            setIsChangePassword(false)
+            setPassword("");
+            setPasswordCheck("");
+            setNewPassword("");
+            setIsChangePassword(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const Unregister = async (e) => {
+    try {
+      e.preventDefault();
+      await Router.CustomAxios.post(
+        "http://localhost:8081/api/v1/user/unregister",
+        {
+          app_key: password,
+        },
+        {
+          headers: {
+            authorization: window.sessionStorage.getItem("authorization"),
+          },
+        }
+      )
+        .then((res) => {
+          if (res.data.error) {
+            alert(res.data.error.text);
+            return;
+          }
+          if (res.data.result) {
+            alert("탈퇴가 완료되었습니다.");
+            window.sessionStorage.removeItem("authorization");
+            window.localStorage.removeItem("refreshauthorization");
+            window.location.replace("/");
           }
         })
         .catch((err) => {
@@ -174,6 +209,7 @@ export const MyPage = () => {
       console.log(error);
     }
   };
+
   return (
     <>
       {window.sessionStorage.getItem("authorization") ? (
@@ -198,7 +234,14 @@ export const MyPage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setIsChangeInfo(!isChangeInfo)}
+                      onClick={() => {
+                        setIsChangeInfo(!isChangeInfo);
+                        setPhone(userInfo.phone);
+                        setGender(userInfo.gender);
+                        setEmail(userInfo.email);
+                        setBirth(userInfo.birth);
+                        setNickname(userInfo.nickname);
+                      }}
                     >
                       취소
                     </button>
@@ -221,7 +264,7 @@ export const MyPage = () => {
               />
               <p>생일</p>
               <input
-                type="date"
+                type={isChangeInfo ? "date" : "text"}
                 value={isChangeInfo ? birth : userInfo.birth}
                 onChange={(e) => setBirth(e.target.value)}
               />
@@ -280,12 +323,15 @@ export const MyPage = () => {
           >
             <form>
               <div className="wrap_title">
-                <h2>전화번호 변경</h2>
+                <h2>전화번호</h2>
                 {isChangePhone ? (
                   <>
                     <button
                       type="button"
-                      onClick={() => setIsChangePhone(!isChangePhone)}
+                      onClick={() => {
+                        setIsChangePhone(!isChangePhone);
+                        setPhone(userInfo.phone);
+                      }}
                     >
                       취소
                     </button>
@@ -308,9 +354,10 @@ export const MyPage = () => {
                       type="text"
                       value={isChangePhone ? phone : userInfo.phone}
                       onChange={(e) => setPhone(e.target.value)}
+                      required
                     />
                     <button
-                      type="button"
+                      type="submit"
                       className="send_sms"
                       onClick={() => setIsChangePhone(true)}
                     >
@@ -323,15 +370,20 @@ export const MyPage = () => {
                       type="number"
                       value={checkPhone}
                       onChange={(e) => setCheckPhone(e.target.value)}
+                      required
                     />
-                    <button className="send_sms" onClick={UpdateUserInfo}>
+                    <button
+                      type="submit"
+                      className="send_sms"
+                      onClick={UpdateUserInfo}
+                    >
                       확인
                     </button>
                   </div>
                 </>
               ) : (
                 <>
-                  <p>전화번호</p>
+                  <p>인증완료 번호</p>
                   <input type="text" value={userInfo.phone} />
                 </>
               )}
@@ -339,25 +391,29 @@ export const MyPage = () => {
           </div>
 
           <div className="wrap_form ">
-            <form>
+            <form onSubmit={UpdatePassword}>
               <div
                 className={
                   isChangePassword ? "wrap_title" : "wrap_title password"
                 }
               >
-                <h2>비밀번호 변경</h2>
+                <h2>비밀번호</h2>
                 {isChangePassword ? (
                   <>
                     <button
                       className="update_btn"
                       type="submit"
-                      onClick={UpdatePassword}
                     >
                       완료
                     </button>
                     <button
                       type="button"
-                      onClick={() => setIsChangePassword(!isChangePassword)}
+                      onClick={() => {
+                        setIsChangePassword(!isChangePassword);
+                        setPassword("");
+                        setPasswordCheck("");
+                        setNewPassword("");
+                      }}
                     >
                       취소
                     </button>
@@ -374,27 +430,74 @@ export const MyPage = () => {
               {isChangePassword ? (
                 <>
                   <p>기존 비밀번호</p>
-                  <input type="password" value={password}
-                  onChange={e => setPassword(e.target.value)} />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                   <p>새 비밀번호</p>
-                  <input type="password" value={newPassword}
-                  onChange={e => setNewPassword(e.target.value)} />
-                  <p>새 비밀번호 확인</p> 
-                  <input type="password" value={passwordCheck}
-                  onChange={e => setPasswordCheck(e.target.value)} />
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                  <p>새 비밀번호 확인</p>
+                  <input
+                    type="password"
+                    value={passwordCheck}
+                    onChange={(e) => setPasswordCheck(e.target.value)}
+                    required
+                  />
                 </>
               ) : (
                 ""
               )}
             </form>
           </div>
-
-          <button className="logout" onClick={LogOut}>
-            로그아웃
-          </button>
-          <button className="unregis" onClick={LogOut}>
-            회원탈퇴
-          </button>
+          {isUnregister ? (
+            <>
+              <div className="wrap_form ">
+                <form onSubmit={Unregister}>
+                  <div className="wrap_title">
+                    <h2>회원탈퇴</h2>
+                    <button className="update_btn" type="submit">
+                      완료
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsUnregister(!isUnregister);
+                        setPassword("");
+                      }}
+                    >
+                      취소
+                    </button>
+                  </div>
+                  <p>비밀번호</p>
+                  <input
+                    required
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </form>
+              </div>
+              <button className="logout" onClick={LogOut}>
+                로그아웃
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="logout" onClick={LogOut}>
+                로그아웃
+              </button>
+              <button className="unregis" onClick={() => setIsUnregister(true)}>
+                회원탈퇴
+              </button>
+            </>
+          )}
         </div>
       ) : (
         window.location.replace("/")
