@@ -265,7 +265,13 @@ export const MyPage = () => {
               <p>생일</p>
               <input
                 type={isChangeInfo ? "date" : "text"}
-                value={isChangeInfo ? birth : userInfo.birth}
+                value={
+                  isChangeInfo
+                    ? birth
+                    : userInfo.birth || userInfo.birth
+                    ? userInfo.birth
+                    : "선택안함"
+                }
                 onChange={(e) => setBirth(e.target.value)}
               />
               <p>성별</p>
@@ -350,35 +356,38 @@ export const MyPage = () => {
                 <>
                   <p>전화번호 인증</p>
                   <div className="warp_phone">
-                    <input
-                      type="text"
-                      value={isChangePhone ? phone : userInfo.phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                    />
-                    <button
-                      type="submit"
-                      className="send_sms"
-                      onClick={() => setIsChangePhone(true)}
-                    >
-                      요청
-                    </button>
+                    <form style={{"display" : "block"}}>
+                      <input
+                        type="text"
+                        value={isChangePhone ? phone : userInfo.phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="send_sms"
+                        onClick={() => setIsChangePhone(true)}
+                      >
+                        요청
+                      </button>
+                    </form>
                   </div>
                   <p>인증번호 입력</p>
                   <div className="warp_phone">
-                    <input
-                      type="number"
-                      value={checkPhone}
-                      onChange={(e) => setCheckPhone(e.target.value)}
-                      required
-                    />
-                    <button
-                      type="submit"
-                      className="send_sms"
-                      onClick={UpdateUserInfo}
-                    >
-                      확인
-                    </button>
+                    <form style={{"display" : "block"}}>
+                      <input
+                        type="text"
+                        value={checkPhone}
+                        onChange={(e) => setCheckPhone(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="send_sms"
+                      >
+                        확인
+                      </button>
+                    </form>
                   </div>
                 </>
               ) : (
@@ -400,10 +409,7 @@ export const MyPage = () => {
                 <h2>비밀번호</h2>
                 {isChangePassword ? (
                   <>
-                    <button
-                      className="update_btn"
-                      type="submit"
-                    >
+                    <button className="update_btn" type="submit">
                       완료
                     </button>
                     <button

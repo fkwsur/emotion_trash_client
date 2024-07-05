@@ -27,7 +27,6 @@ input::placeholder {
   letter-spacing: 0.3px;
   color: rgb(45, 45, 45);
 }
-
 /* 헤더 */
 .header {
   position: fixed;
@@ -193,12 +192,16 @@ input::placeholder {
   border-radius: 0 0 0 25px;
   flex-direction: column;
 }
+div.main.login form.find_account{
+  display: block;
+}
 
-.main.login .login_box form .user_id {
+.main.login .login_box form .user_id,
+.main.login .login_box .find_account{
   position: relative;
 }
 
-.main.login .login_box form button {
+.main.login .login_box form button{
   height: 60px;
   margin-top: 15px;
   background-color: #ffbd7b;
@@ -207,7 +210,8 @@ input::placeholder {
   margin-bottom: 30px;
 }
 
-.main.login .login_box form .check_id {
+.main.login .login_box form .check_id,
+.main.login .login_box .find_account button{
   width: 20%;
   height: 50px;
   position: absolute;

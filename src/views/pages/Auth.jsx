@@ -1,44 +1,35 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../image/trash.png";
 import Router from "..";
+import { Route,useLocation } from 'react-router-dom'
 
 export const Auth = () => {
-  const [isAuth, setIsAuth] = useState("signin");
-
+  const pathname = useLocation();
   return (
     <div className="main login">
-      {window.sessionStorage.getItem("authorization") ? (
-        <Router.MyPage />
-      ) : (
-        <>
-          {isAuth == "signin" ? (
+          {pathname.pathname == "/auth/signin" ? 
             <h2>로그인</h2>
-          ) : isAuth == "signup" ? (
+           : pathname.pathname == "/auth/signup" ? 
             <h2>회원가입</h2>
-          ) : (
-            ""
-          )}
+          : pathname.pathname == "/auth/find_account" ?   
+            <h2>아이디 | 비밀번호 찾기</h2>
+          :  ""
+          }
           <div className="login_box">
             <div className="title_wrap">
               <img src={logo} alt="logo" />
               <h2>감쓰통</h2>
               <h3>당신을 위한 감정 쓰레기통</h3>
             </div>
-            {isAuth == "signin" ? (
-              <SignIn setIsAuth={setIsAuth} />
-            ) : isAuth == "signup" ? (
-              <SignUp setIsAuth={setIsAuth} />
-            ) : (
-              ""
-            )}
+            <Route exact path="/auth/signin" component={SignIn} />
+            <Route exact path="/auth/signup" component={SignUp} />
+            <Route exact path="/auth/find_account" component={FindAccount} />
           </div>
-        </>
-      )}
     </div>
   );
 };
 
-export const SignIn = (props) => {
+export const SignIn = ({history}) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -105,12 +96,12 @@ export const SignIn = (props) => {
         </button>
         <p className="help_login">
           아직 계정이 없으신가요?{" "}
-          <span onClick={() => props.setIsAuth("signup")}>
+          <span onClick={() => history.push('/auth/signup')}>
             {" "}
             간편 / 자체 회원가입하기
           </span>
         </p>
-        <p className="help_login">
+        <p className="help_login" onClick={() => history.push('/auth/find_account')}>
           <span>아이디 | 비밀번호</span> 찾기
         </p>
       </form>
@@ -118,7 +109,7 @@ export const SignIn = (props) => {
   );
 };
 
-export const SignUp = (props) => {
+export const SignUp = ({history}) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -143,8 +134,6 @@ export const SignUp = (props) => {
       return alert(
         "길이 4~20자 및 영문으로 시작하는 영문이나 숫자 조합의 아이디를 입력해주세요."
       );
-    } else if (isChecked === false) {
-      return alert("계정 중복확인을 진행해주세요.");
     } else if (regexName.test(nickname) === false) {
       return alert(
         "닉네임은 한글 또는 영문만 입력해주세요.(단일 자음, 모음 불가)"
@@ -154,13 +143,15 @@ export const SignUp = (props) => {
     } else if (regexNumber.test(phone) === false) {
       return alert("전화번호 양식이 맞지 않습니다.");
     } else if (password.length < 8) {
-      alert("비밀번호는 8자 이상이어야 합니다.");
+      return alert("비밀번호는 8자 이상이어야 합니다.");
     } else if (regexPassword.test(password) === false) {
-      alert(
+      return alert(
         "하나 이상의 문자, 숫자 ,특수 문자(@$!%*?&)를 입력해주세요."
       );
     } else if (passwordCheck.length >= 1 && password !== passwordCheck) {
-      alert("비밀번호 확인이 일치하지 않습니다.");
+      return alert("비밀번호 확인이 일치하지 않습니다.");
+    } else if (isChecked === false) {
+      return alert("계정 중복확인을 진행해주세요.");
     }
     // else if (acceptCheckBox === false) {
     //   return alert("이용약관에 동의해 주세요.");
@@ -182,7 +173,7 @@ export const SignUp = (props) => {
         .then((res) => {
           if (res.data.result) {
             alert("가입이 완료되었습니다.");
-            props.setIsAuth("signin");
+            history.push('/auth/signin')
           }
           if (res.data.error) {
             if (
@@ -347,7 +338,49 @@ export const SignUp = (props) => {
           가입완료
         </button>
         <p className="help_login">
-          <span onClick={() => props.setIsAuth("signin")}>
+          <span onClick={() => history.push('/auth/signin')}>
+            로그인페이지로 이동
+          </span>
+        </p>
+      </form>
+    </>
+  );
+};
+
+export const FindAccount = ({history}) => {
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  return (
+    <>
+  <form className="find_account">
+        <p>아이디 찾기 <br />
+        <span style={{"font-size": "1.4rem", "color": "rgb(142, 142, 142)"}}>∙본인인증된 전화번호를 입력해 주세요.</span>
+        </p>
+        <form>
+        <input
+          type="text"
+          name="userId"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+          required
+        />
+        <button type="submit">확인</button>
+        </form>
+        <p>비밀번호 찾기 <br />
+        <span style={{"font-size": "1.4rem", "color": "rgb(142, 142, 142)"}}>∙비밀번호를 찾고자 하는 아이디를 입력해 주세요.</span>
+        </p>
+        <form>
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">확인</button>
+        </form>
+        <p className="help_login">
+          <span onClick={() => history.push('/auth/signin')}>
             로그인페이지로 이동
           </span>
         </p>

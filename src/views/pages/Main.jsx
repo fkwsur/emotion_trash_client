@@ -44,7 +44,7 @@ export const Main = () => {
               </div>{" "}
             </NavLink>
           ) : (
-            <NavLink to={`/auth`}>로그인 / 회원가입
+            <NavLink to={`/auth/signin`}>로그인 / 회원가입
             </NavLink>
           )}
         </div>
