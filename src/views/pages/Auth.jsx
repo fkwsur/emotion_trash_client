@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../image/trash.png";
+import logo from "../../image/trash.svg";
 import Router from "..";
 import { Route,useLocation } from 'react-router-dom'
 

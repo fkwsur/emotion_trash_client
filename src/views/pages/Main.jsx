@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../image/trash.png";
+import logo from "../../image/trash.svg";
 import profile from "../../image/profile1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,11 +24,11 @@ export const Main = () => {
                 <FontAwesomeIcon icon={faHeart} /> 연애
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink to={`/tarot`}>
                 <FontAwesomeIcon icon={faStarAndCrescent} /> 타로
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink to={`/subscribe`}>
                 <FontAwesomeIcon icon={faAddressCard} /> 구독

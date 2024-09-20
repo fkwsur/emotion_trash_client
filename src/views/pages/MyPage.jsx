@@ -72,10 +72,9 @@ export const MyPage = () => {
         return alert("이메일 형식이 맞지 않습니다.");
       } else if (regexNumber.test(phone) === false) {
         return alert("전화번호 양식이 맞지 않습니다.");
-      } else if (birth.includes("-") == false || birth == undefined) {
+      } else if (birth == undefined || birth == null || birth == "") {
         set_birth = null;
       }
-      console.log(birth);
       await Router.CustomAxios.post(
         "http://localhost:8081/api/v1/user/update/userinfo",
         {
